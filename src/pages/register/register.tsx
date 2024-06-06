@@ -27,25 +27,25 @@ function Register() {
   return (
     <div className={styles.register}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Input
+        <Input<FormData>
           register={register}
           name="phone"
           placeholder="Телефон"
           errors={errors}
         />
-        <Input
+        <Input<FormData>
           register={register}
           name="lastname"
           placeholder="Фамилия"
           errors={errors}
         />
-        <Input
+        <Input<FormData>
           register={register}
           name="firstname"
           placeholder="Имя"
           errors={errors}
         />
-        <Input
+        <Input<FormData>
           register={register}
           name="email"
           placeholder="Почта"

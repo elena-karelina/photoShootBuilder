@@ -1,27 +1,35 @@
 import styles from "./input.module.css";
-import { UseFormRegister, FieldErrors } from "react-hook-form";
+import {
+  UseFormRegister,
+  FieldErrors,
+  FieldValues,
+  Path,
+} from "react-hook-form";
 
-interface FormValues {
-  [key: string]: string;
-}
-
-interface InputProps {
-  register: UseFormRegister<FormValues>;
-  name: string;
+interface InputProps<T extends FieldValues> {
+  register: UseFormRegister<T>;
+  name: Path<T>;
   placeholder?: string;
-  errors?: FieldErrors;
+  errors?: FieldErrors<T>;
 }
-function Input({ register, name, placeholder, errors }: InputProps) {
+
+function Input<T extends FieldValues>({
+  register,
+  name,
+  placeholder,
+  errors,
+}: InputProps<T>) {
+  const path = typeof name === "string" ? name : (name as string);
   return (
     <>
       <input
         {...register(name)}
         placeholder={placeholder}
-        className={`${styles.input} ${errors?.[name] && styles.input_error}`}
+        className={`${styles.input} ${errors?.[path] && styles.input_error}`}
       />
       {errors?.[name] && (
         <div className={styles.errors}>
-          {errors?.[name]?.message || "Error!"}
+          {(errors?.[path]?.message as string) || "Error!"}
         </div>
       )}
     </>

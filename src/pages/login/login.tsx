@@ -5,11 +5,11 @@ import { loginValidationSchema } from "../../constants/validationSchemas";
 import Input from "../../components/ui/input/input";
 import Button from "../../components/ui/button/button";
 
+interface FormData {
+  login: string;
+  password: string;
+}
 function Login() {
-  interface FormData {
-    login: string;
-    password: string;
-  }
   const {
     register,
     formState: { errors },
@@ -25,13 +25,13 @@ function Login() {
   return (
     <div className={styles.login}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Input
+        <Input<FormData>
           register={register}
           name="login"
           placeholder="Логин"
           errors={errors}
         />
-        <Input
+        <Input<FormData>
           register={register}
           name="password"
           placeholder="пароль"
