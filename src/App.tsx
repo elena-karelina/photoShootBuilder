@@ -3,6 +3,7 @@ import Main from "./pages/main/main";
 import Register from "./pages/register/register";
 import Layout from "./components/layout/layout";
 import Login from "./pages/login/login";
+import Profile from "./pages/profile/profile";
 
 const router = createBrowserRouter(
   [
@@ -22,11 +23,15 @@ const router = createBrowserRouter(
           path: "/login",
           element: <Login />,
         },
+        {
+          path: "/profile",
+          element: <Profile />,
+        },
       ],
     },
   ],
   {
-    basename: "/photoShootBuilder/",
+    // basename: "/photoShootBuilder/",
   }
 );
 
