@@ -1,0 +1,20 @@
+.header {
+  width: 100%;
+  display: flex;
+}
+.right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.right > div > a {
+  font-weight: 600;
+  text-transform: uppercase;
+  color: rgb(81, 50, 92);
+  text-decoration: none;
+}
+.right > div:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
