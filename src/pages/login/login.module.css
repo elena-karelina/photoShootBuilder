@@ -1,29 +1,29 @@
-.register {
+.login {
   margin-top: 70px;
   width: 100%;
 }
-.register > form {
+.login > form {
   width: 40%;
   margin: auto;
   display: flex;
   flex-direction: column;
 }
-.register > form > button {
+.login > form > button {
   margin-top: 20px;
 }
 
 @media (max-width: 1150px) {
-  .register > form {
+  .login > form {
     width: 50%;
   }
 }
 @media (max-width: 800px) {
-  .register > form {
+  .login > form {
     width: 70%;
   }
 }
 @media (max-width: 500px) {
-  .register > form {
+  .login > form {
     width: 100%;
   }
 }

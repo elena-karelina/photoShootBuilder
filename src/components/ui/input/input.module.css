@@ -1,0 +1,34 @@
+.input {
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(116, 37, 136, 1);
+  padding-left: 12px;
+  font-size: 16px;
+  width: 100%;
+  height: 48px;
+}
+.input::placeholder {
+  color: rgb(129, 126, 129);
+  letter-spacing: 1px;
+  font-weight: inherit;
+}
+.input:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8),
+    0 0 10px rgba(158, 108, 160, 0.685);
+}
+.errors {
+  color: brown;
+  font-size: 12px;
+  padding-inline: 3px;
+  border-radius: 20px;
+  background-color: white;
+  margin-block: -20px 10px;
+  align-self: flex-start;
+  margin-left: 10px;
+}
+.input_error {
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 10px brown;
+  border: 1px solid brown;
+}

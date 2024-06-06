@@ -1,0 +1,16 @@
+.button {
+  width: 100%;
+  padding-block: 15px;
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: aliceblue;
+  background-color: rgb(152, 92, 173);
+  border-radius: 20px;
+  border: none;
+  letter-spacing: 2px;
+}
+.button:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}

@@ -6,8 +6,6 @@ import router from "./App";
 
 createRoot(document.getElementById("root")!).render(
   <>
-    {/* <Layout> */}
     <RouterProvider router={router} />
-    {/* </Layout> */}
   </>
 );

@@ -11,6 +11,5 @@
 }
 .logo:hover {
   cursor: pointer;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.74),
-    0 0 25px rgba(116, 37, 136, 0.7), 0 0 50px rgba(136, 34, 161, 0.7);
+  opacity: 0.8;
 }
