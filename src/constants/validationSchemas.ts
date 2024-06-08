@@ -16,3 +16,9 @@ export const loginValidationSchema = yup.object().shape({
   login: yup.string().required("Поле обязательно к заполнению"),
   password: yup.string().required("Поле обязательно к заполнению"),
 });
+export const editProfileValidationSchema = yup.object().shape({
+  name: yup.string().required("Поле обязательно к заполнению"),
+  city: yup.string().required("Поле обязательно к заполнению"),
+  inst: yup.string(),
+  tg: yup.string(),
+});

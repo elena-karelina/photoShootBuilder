@@ -2,9 +2,9 @@
   width: 100%;
   padding-block: 15px;
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 500;
   text-transform: uppercase;
-  color: aliceblue;
+  color: rgb(250, 253, 255);
   background-color: rgb(152, 92, 173);
   border-radius: 20px;
   border: none;
@@ -13,4 +13,11 @@
 .button:hover {
   cursor: pointer;
   opacity: 0.8;
+}
+
+.form {
+  width: auto;
+  padding: 10px 22px;
+  font-size: 14px;
+  box-shadow: 0 0 10px 0 rgb(167, 112, 187);
 }
