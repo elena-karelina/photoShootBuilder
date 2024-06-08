@@ -31,7 +31,7 @@ const router = createBrowserRouter(
     },
   ],
   {
-    // basename: "/photoShootBuilder/",
+    basename: "/photoShootBuilder",
   }
 );
 

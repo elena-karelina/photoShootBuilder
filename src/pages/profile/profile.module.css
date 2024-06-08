@@ -2,7 +2,10 @@
   width: 100%;
 }
 .profile {
-  background-color: rgb(221, 215, 226);
+  /* background-color: rgb(221, 215, 226); */
+  /* box-shadow: 0 0 10px rgba(157, 95, 162, 0.7),
+    0 0 15px rgba(190, 121, 205, 0.7), 0 0 30px rgba(179, 112, 182, 0.7); */
+  box-shadow: 0px 0px 10px 7px rgb(213, 194, 223);
   box-sizing: border-box;
   margin-top: 100px;
   border-radius: 100px 100px 0 0;
@@ -14,7 +17,8 @@
   column-gap: 20px;
 }
 .profile > div > img {
-  border: 5px solid rgba(170, 151, 183, 0.7);
+  border: 1px solid rgba(170, 151, 183, 1);
+  box-shadow: 0 0 10px rgba(157, 95, 162, 0.7);
   width: 200px;
   border-radius: 50%;
   margin-top: -70px;
@@ -31,10 +35,10 @@
   width: 100%;
   font-size: 38px;
   text-transform: uppercase;
-  font-weight: 900;
+  font-weight: 600;
   letter-spacing: 1px;
-  color: white; /* Цвет текста */
-  text-shadow: 1px 1px 3px rgb(47, 38, 52);
+  color: rgb(58, 49, 58);
+  /* text-shadow: 1px 1px 3px rgb(47, 38, 52); */
 }
 .contacts {
   display: flex;
