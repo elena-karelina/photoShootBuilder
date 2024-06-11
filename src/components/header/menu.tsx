@@ -12,6 +12,9 @@ function Menu() {
       <div>
         <Link to="/logIn">Вход</Link>
       </div>
+      <div>
+        <Link to="/menu">Меню</Link>
+      </div>
     </div>
   );
 }

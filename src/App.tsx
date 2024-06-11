@@ -4,6 +4,7 @@ import Register from "./pages/register/register";
 import Layout from "./components/layout/layout";
 import Login from "./pages/login/login";
 import Profile from "./pages/profile/profile";
+import Menu from "./pages/menu/menu";
 
 const router = createBrowserRouter(
   [
@@ -26,6 +27,10 @@ const router = createBrowserRouter(
         {
           path: "/profile",
           element: <Profile />,
+        },
+        {
+          path: "/menu",
+          element: <Menu />,
         },
       ],
     },

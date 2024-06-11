@@ -1,0 +1,32 @@
+.cards {
+  display: flex;
+  gap: 15px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+.cards::-webkit-scrollbar {
+  background-color: rgb(233, 233, 233); /* цвет бегунка */
+  border-radius: 20px; /* округлось бегунка */
+
+  height: 5px;
+}
+.cards::-webkit-scrollbar-thumb {
+  background-color: rgb(129, 129, 129);
+  border-radius: 20px;
+}
+.cards::-webkit-scrollbar-track-piece:horizontal:start {
+  background-color: rgb(129, 129, 129);
+  border-radius: 20px;
+}
+.title {
+  font-weight: 500;
+  font-size: 22px;
+  color: rgb(104, 59, 96);
+  margin-top: 40px;
+}
+.title:hover {
+  opacity: 0.7;
+  cursor: pointer;
+  display: block;
+  width: fit-content;
+}

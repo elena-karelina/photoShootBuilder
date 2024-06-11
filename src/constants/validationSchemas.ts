@@ -1,5 +1,8 @@
 import * as yup from "yup";
 
+const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/gif", "image/png"];
+const FILE_SIZE_LIMIT = 1024 * 1024 * 5;
+
 export const registerValidationSchema = yup.object().shape({
   phone: yup
     .string()
@@ -18,6 +21,7 @@ export const loginValidationSchema = yup.object().shape({
 });
 export const editProfileValidationSchema = yup.object().shape({
   name: yup.string().required("Поле обязательно к заполнению"),
+  photo: yup.mixed(),
   city: yup.string().required("Поле обязательно к заполнению"),
   inst: yup.string(),
   tg: yup.string(),

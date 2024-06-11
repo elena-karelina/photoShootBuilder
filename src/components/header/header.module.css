@@ -43,7 +43,8 @@
   line-height: 30px;
   border-radius: 0 0 20px 20px;
   box-shadow: 10px 15px 10px -5px rgb(213, 194, 223);
-  text-shadow: 0 0 5px rgb(214, 202, 221);
+  z-index: 5;
+  /* text-shadow: 0 0 5px rgb(214, 202, 221); */
 }
 @media (max-width: 720px) {
   .menu_button {
@@ -63,6 +64,9 @@
   .menu:hover,
   .menu_button:hover + .menu {
     display: block;
+  }
+  .menu > div:hover {
+    opacity: 0.8;
   }
   .left {
     align-items: center;

@@ -9,6 +9,7 @@ function Header() {
     <div className={styles.header}>
       <div className={styles.left}>
         <Logo />
+
         <MenuOutlined
           style={{ fontSize: "32px" }}
           className={styles.menu_button}
@@ -17,6 +18,9 @@ function Header() {
       </div>
 
       <div className={styles.right}>
+        <div className={styles.reqister}>
+          <Link to="/menu">Меню</Link>{" "}
+        </div>
         <div className={styles.reqister}>
           <Link to="/profile">Профиль</Link>{" "}
         </div>

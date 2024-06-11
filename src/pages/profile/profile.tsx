@@ -5,34 +5,76 @@ import tg from "../../assets/tg.png";
 import edit from "../../assets/edit_profile.png";
 import inst from "../../assets/inst.png";
 import Form from "./components/form/form";
+import { useState } from "react";
 function Profile() {
+  type DataForm = {
+    photo?: string;
+    name: string;
+    city: string;
+    tg?: string;
+    inst?: string;
+  };
+
+  const initialData: DataForm = {
+    name: "Карелина Елена",
+    city: "Томск",
+    tg: "kapehaeha",
+    inst: "kapehaeha",
+  };
+  const [userData, setUserData] = useState<DataForm>(initialData);
+
+  const [foto, setFoto] = useState(photo);
+  const handleSave = (data: object) => {
+    console.log("Saved data:", data);
+    setUserData((prevUserData) => ({
+      ...prevUserData,
+      name: data.name,
+      city: data.city,
+      tg: data.tg,
+      inst: data.inst,
+    }));
+    if (data.photo && data.photo[0]) {
+      const file = data.photo[0];
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        const photoDataUrl = reader.result as string;
+        setUserData((prevUserData) => ({
+          ...prevUserData,
+          photo: photoDataUrl,
+        }));
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
   return (
     <div className={styles.profile_wrapper}>
       <div className={styles.profile}>
         <div>
-          <img src={photo} />
+          <img src={foto} />
         </div>
 
         <div className={styles.title}>
           <div className={styles.name}>
-            Карелина Елена
-            <Form>
+            {userData.name}
+            <Form onSave={handleSave}>
               <img src={edit} />
             </Form>
           </div>
           <div className={styles.contacts}>
             <div>
               <div className={styles.contacts_item}>
-                <img src={city} /> Томск
+                <img src={city} /> {userData.city}
               </div>
             </div>
 
             <div>
               <div className={styles.contacts_item}>
-                <img src={tg} /> kapehaeha
+                <img src={tg} /> {userData.tg ? userData.tg : "-"}
               </div>
               <div className={styles.contacts_item}>
-                <img src={inst} /> kapehaeha
+                <img src={inst} /> {userData.inst ? userData.inst : "-"}
               </div>
             </div>
           </div>
