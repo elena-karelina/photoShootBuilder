@@ -4,6 +4,9 @@ import photo from "../../../assets/8b0fceec83bbceb3c52beb0a6ad1c292.jpg";
 
 const contentStyle: React.CSSProperties = {
   width: "100%",
+  height: "250px",
+  objectFit: "cover",
+  objectPosition: "center",
 };
 
 const Slider: React.FC = () => (
