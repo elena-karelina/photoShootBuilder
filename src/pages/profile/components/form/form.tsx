@@ -11,8 +11,8 @@ interface Props {
   children: React.ReactNode;
   onSave: (data: FormData) => void;
 }
-interface FormData {
-  photo?: File;
+export interface FormData {
+  photo?: FileList;
   name: string;
   city: string;
   tg?: string;
@@ -46,7 +46,7 @@ const Form: React.FC<Props> = ({ children, onSave }) => {
   });
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log(data);
+    console.log(data.photo);
     onSave(data);
     handleOk();
   };

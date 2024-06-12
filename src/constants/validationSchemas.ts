@@ -1,8 +1,5 @@
 import * as yup from "yup";
 
-const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/gif", "image/png"];
-const FILE_SIZE_LIMIT = 1024 * 1024 * 5;
-
 export const registerValidationSchema = yup.object().shape({
   phone: yup
     .string()

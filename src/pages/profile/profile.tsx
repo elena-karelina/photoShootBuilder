@@ -4,7 +4,7 @@ import city from "../../assets/city.png";
 import tg from "../../assets/tg.png";
 import edit from "../../assets/edit_profile.png";
 import inst from "../../assets/inst.png";
-import Form from "./components/form/form";
+import Form, { FormData } from "./components/form/form";
 import { useState } from "react";
 function Profile() {
   type DataForm = {
@@ -16,6 +16,7 @@ function Profile() {
   };
 
   const initialData: DataForm = {
+    photo: photo,
     name: "Карелина Елена",
     city: "Томск",
     tg: "kapehaeha",
@@ -23,8 +24,7 @@ function Profile() {
   };
   const [userData, setUserData] = useState<DataForm>(initialData);
 
-  const [foto, setFoto] = useState(photo);
-  const handleSave = (data: object) => {
+  const handleSave = (data: FormData) => {
     console.log("Saved data:", data);
     setUserData((prevUserData) => ({
       ...prevUserData,
@@ -52,7 +52,7 @@ function Profile() {
     <div className={styles.profile_wrapper}>
       <div className={styles.profile}>
         <div>
-          <img src={foto} />
+          <img src={userData.photo} />
         </div>
 
         <div className={styles.title}>
