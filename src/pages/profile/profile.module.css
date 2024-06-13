@@ -12,7 +12,6 @@
   padding-inline: 90px;
   height: calc(100vh - 160px);
   display: flex;
-  /* flex-wrap: wrap; */
   align-content: flex-start;
   column-gap: 20px;
 }
@@ -79,6 +78,7 @@
 @media (max-width: 550px) {
   .profile > div > img {
     width: 150px;
+    height: 150px;
   }
   .name {
     font-size: 32px;
@@ -96,6 +96,7 @@
 @media (max-width: 450px) {
   .profile > div > img {
     width: 130px;
+    height: 130px;
   }
   .name {
     font-size: 28px;
