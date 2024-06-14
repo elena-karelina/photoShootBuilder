@@ -21,3 +21,9 @@
   font-size: 14px;
   box-shadow: 0 0 10px 0 rgb(167, 112, 187);
 }
+.small {
+  width: auto;
+  padding: 8px 25px;
+  font-size: 13px;
+  letter-spacing: 1px;
+}

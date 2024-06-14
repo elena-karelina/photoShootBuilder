@@ -1,10 +1,7 @@
 import * as yup from "yup";
 
 export const registerValidationSchema = yup.object().shape({
-  phone: yup
-    .string()
-    .required("Поле обязательно к заполнению")
-    .matches(/^[0-9]*$/, "Введите только цифры"),
+  password: yup.string().required("Поле обязательно к заполнению"),
   lastname: yup.string().required("Поле обязательно к заполнению"),
   firstname: yup.string().required("Поле обязательно к заполнению"),
   email: yup

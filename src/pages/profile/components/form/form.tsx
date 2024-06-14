@@ -17,6 +17,7 @@ export interface FormData {
   city: string;
   tg?: string;
   inst?: string;
+  description?: string;
 }
 const Form: React.FC<Props> = ({ children, onSave }) => {
   const [open, setOpen] = useState(false);

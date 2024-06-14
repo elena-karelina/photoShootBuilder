@@ -4,8 +4,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { loginValidationSchema } from "../../constants/validationSchemas";
 import Input from "../../components/ui/input/input";
 import Button from "../../components/ui/button/button";
+import login from "../../shared/api/requests/login/login";
 
-interface FormData {
+export interface FormData {
   login: string;
   password: string;
 }
@@ -20,6 +21,18 @@ function Login() {
   });
   const onSubmit: SubmitHandler<FormData> = (data) => {
     console.log(data);
+    login(data)
+      .then((response: object) => {
+        //const { token } = response.data;
+        //localStorage.setItem("token", token);
+        console.log(response);
+      })
+      .catch((error: object) => {
+        console.log(error);
+        // if (error.response) {
+        //   alert(`Ошибка: ${error.message}`);
+        // }
+      });
   };
 
   return (
