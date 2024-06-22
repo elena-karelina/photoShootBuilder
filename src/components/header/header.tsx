@@ -50,7 +50,7 @@ function Header() {
         )}
         {user.isAuth && (
           <div className={styles.reqister}>
-            <Link to="/profile">Заявка</Link>
+            <Link to="/service">Заявка</Link>
           </div>
         )}
         {user.isAuth && (

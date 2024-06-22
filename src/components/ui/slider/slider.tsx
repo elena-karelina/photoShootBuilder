@@ -4,7 +4,7 @@ import photo from "../../../assets/8b0fceec83bbceb3c52beb0a6ad1c292.jpg";
 
 const contentStyle = (type: string): React.CSSProperties => ({
   width: "100%",
-  height: type === "profile" ? "350px" : "250px",
+  height: type === "profile" ? "450px" : "250px",
   objectFit: "cover",
   objectPosition: "center",
 });
