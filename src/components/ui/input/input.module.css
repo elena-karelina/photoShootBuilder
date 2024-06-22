@@ -1,6 +1,5 @@
 .input {
   box-sizing: border-box;
-  margin-bottom: 10px;
   border-radius: 20px;
   border: 1px solid rgba(116, 37, 136, 1);
   padding-block: 12px;
@@ -11,10 +10,7 @@
 .input_file {
   align-self: flex-start;
 }
-.input_file > button {
-  border: 1px solid rgba(116, 37, 136, 1);
-  padding: 5px 15px;
-}
+
 .input::placeholder {
   color: rgb(129, 126, 129);
   letter-spacing: 1px;
@@ -25,17 +21,42 @@
   box-shadow: 0 0 8px rgba(255, 255, 255, 0.8),
     0 0 10px rgba(158, 108, 160, 0.685);
 }
+
 .errors {
   color: brown;
   font-size: 12px;
   padding-inline: 3px;
   border-radius: 20px;
   background-color: white;
-  margin-block: -20px 10px;
+  margin-top: -20px;
   align-self: flex-start;
   margin-left: 10px;
+  margin-bottom: -5px;
 }
 .input_error {
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 10px brown;
+  box-shadow: 0 0 3px brown;
   border: 1px solid brown;
+}
+
+input::-webkit-file-upload-button {
+  border: none;
+  padding: 7px 15px;
+  color: rgb(250, 253, 255);
+  background-color: rgb(167, 112, 187);
+  border-radius: 10px;
+  margin-right: 10px;
+}
+input[type="file"]::-webkit-file-upload-button:hover {
+  cursor: pointer;
+  opacity: 0.9;
+}
+.file_error::-webkit-file-upload-button {
+  background-color: brown;
+}
+.addService {
+  border-radius: 5px;
+  border-color: rgba(157, 95, 162, 0.7);
+  width: 250px;
+  padding-block: 8px;
+  font-size: 14px;
 }

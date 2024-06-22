@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
-import Card from "./card";
 import { RightOutlined } from "@ant-design/icons";
 import styles from "./components.module.css";
+import Card from "../../../components/ui/card/card";
 
 function Section() {
   const cardsRef = useRef<HTMLDivElement>(null);
@@ -28,14 +28,12 @@ function Section() {
         Фотографы <RightOutlined style={{ fontSize: "18px" }} />
       </h3>
       <div className={styles.cards} ref={cardsRef}>
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        <Card type="menu" />
+        <Card type="menu" />
+        <Card type="menu" />
+        <Card type="menu" />
+        <Card type="menu" />
+        <Card type="menu" />
       </div>
     </div>
   );

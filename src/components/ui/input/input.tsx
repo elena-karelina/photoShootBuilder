@@ -12,6 +12,8 @@ interface InputProps<T extends FieldValues> {
   placeholder?: string;
   errors?: FieldErrors<T>;
   type?: string;
+  variant?: string;
+  multiple?: boolean;
 }
 
 function Input<T extends FieldValues>({
@@ -20,6 +22,8 @@ function Input<T extends FieldValues>({
   placeholder,
   errors,
   type,
+  multiple,
+  variant,
 }: InputProps<T>) {
   const path = typeof name === "string" ? name : (name as string);
   return (
@@ -28,11 +32,13 @@ function Input<T extends FieldValues>({
         type={type ? type : "text"}
         {...register(name)}
         placeholder={placeholder}
-        className={`${type ? styles.input_file : styles.input} ${
-          errors?.[path] && styles.input_error
-        }`}
+        className={`${type == "file" ? styles.input_file : styles.input} ${
+          errors?.[path] && type != "file" && styles.input_error
+        } ${errors?.photo && type == "file" && styles.file_error}
+        ${variant ? styles[variant] : ""}`}
+        multiple={multiple ? true : undefined}
       />
-      {errors && errors[name] && (
+      {errors && errors[name] && type != "file" && (
         <div className={styles.errors}>{errors[name]?.message as string}</div>
       )}
     </>

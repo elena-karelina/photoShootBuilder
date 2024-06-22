@@ -1,0 +1,51 @@
+.form > input {
+  display: block;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: flex-start;
+}
+.service_wrapper {
+  border-block: 1px solid rgb(152, 92, 173);
+  padding-block: 10px;
+  box-shadow: 0 -4px 4px -4px rgba(157, 95, 162, 0.7),
+    0 4px 4px -4px rgba(157, 95, 162, 0.7);
+}
+.errors {
+  color: brown;
+  font-size: 12px;
+  margin-top: -15px;
+}
+.error_select > div {
+  border: 1px solid brown !important;
+  box-shadow: 0 0px 1px 1px brown;
+  border-radius: 7px;
+}
+.error_select {
+  color: brown;
+}
+.weekends {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+.weekends_checkbox > div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.slots {
+  display: flex;
+  width: 100%;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.slots > div:nth-child(2) {
+  flex: 2;
+}
+.slots > div:first-child {
+  min-width: 205px;
+}

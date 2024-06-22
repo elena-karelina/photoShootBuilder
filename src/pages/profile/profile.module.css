@@ -11,6 +11,7 @@
   border-radius: 100px 100px 0 0;
   padding-inline: 90px;
   min-height: calc(100vh - 160px);
+  padding-bottom: 20px;
 }
 .header_profile {
   display: flex;
@@ -51,39 +52,35 @@
   margin-top: 20px;
   color: rgb(58, 49, 58);
 }
-.textarea {
-  border: 1px solid rgb(58, 49, 58);
-  max-width: 100%;
-  min-width: 100%;
-  min-height: 120px;
-  margin-top: 15px;
-}
+
 .button {
   width: 20%;
 }
-.textarea::-webkit-scrollbar {
-  background-color: rgb(233, 233, 233); /* цвет бегунка */
-  width: 5px;
+
+.description {
+  margin-bottom: 10px;
 }
-.textarea::-webkit-scrollbar-thumb {
-  background-color: rgb(82, 60, 82);
-  border-radius: 20px;
-}
-.description > span:hover {
+.description > span:hover,
+.name > span:hover,
+.addServices > span:hover {
   opacity: 0.8;
   cursor: pointer;
 }
-.description > p {
+.info {
   line-height: 22px;
   text-align: justify;
+}
+.description > p {
   text-indent: 18px;
   margin-block: 5px;
 }
-.description > span {
+.description > span,
+.addServices > span {
   display: block;
   margin-bottom: 10px;
 }
-.description > span > span {
+.description > span > span,
+.addServices > span > span {
   margin-right: 10px;
 }
 .contacts {
@@ -102,11 +99,36 @@
   display: flex;
   align-items: end;
 }
-
+.services > div:first-child {
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: 600;
+}
+.services_card {
+  display: flex;
+  row-gap: 15px;
+  column-gap: 15px;
+  flex-wrap: wrap;
+}
+.services_card > div {
+  width: calc(25% - 15px);
+}
+@media (max-width: 1200px) {
+  .services_card > div {
+    width: calc(33% - 15px);
+  }
+}
 @media (max-width: 1000px) {
   .profile {
     border-radius: 35px 35px 0 0;
-    padding-inline: 60px;
+    padding-inline: 50px;
+  }
+}
+@media (max-width: 880px) {
+  .services_card > div {
+    width: calc(50% - 15px);
   }
 }
 @media (max-width: 720px) {
@@ -114,8 +136,14 @@
     flex-wrap: wrap;
   }
 }
+@media (max-width: 620px) {
+  .services_card > div {
+    width: 75%;
+    margin-inline: auto;
+  }
+}
 @media (max-width: 550px) {
-  .profile > div > img {
+  .header_profile > div > img {
     width: 150px;
     height: 150px;
   }
@@ -126,14 +154,17 @@
 @media (max-width: 500px) {
   .profile {
     border-radius: 30px 30px 0 0;
-    padding-inline: 40px;
+    padding-inline: 30px;
   }
-  .profile > div:first-child {
+  .header_profile > div {
     margin: auto;
   }
 }
 @media (max-width: 450px) {
-  .profile > div > img {
+  .services_card > div {
+    width: 100%;
+  }
+  .header_profile > div > img {
     width: 130px;
     height: 130px;
   }
@@ -143,8 +174,15 @@
   .contacts {
     font-size: 14px;
   }
+  .info {
+    font-size: 13px;
+    line-height: 14px;
+  }
 }
 @media (max-width: 400px) {
+  .profile {
+    padding-inline: 20px;
+  }
   .name {
     font-size: 24px;
   }

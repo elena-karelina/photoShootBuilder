@@ -1,0 +1,26 @@
+.textarea {
+  border: 1px solid rgba(157, 95, 162, 0.7);
+  padding: 5px 10px;
+  border-radius: 5px;
+  max-width: 100%;
+  min-width: 100%;
+  min-height: 120px;
+  box-sizing: border-box;
+}
+.textarea:focus {
+  outline: none;
+  border: 1px solid rgba(132, 91, 134, 0.733);
+  box-shadow: 0 0 2px rgba(157, 95, 162, 0.7);
+}
+.textarea::-webkit-scrollbar {
+  background-color: rgb(233, 233, 233);
+  width: 3px;
+}
+.textarea::-webkit-scrollbar-thumb {
+  background-color: rgb(121, 91, 121);
+  border-radius: 20px;
+}
+.error {
+  border-color: brown;
+  box-shadow: 0 0 2px brown;
+}

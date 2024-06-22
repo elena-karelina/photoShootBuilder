@@ -5,6 +5,9 @@ import { registerValidationSchema } from "../../constants/validationSchemas";
 import Input from "../../components/ui/input/input";
 import Button from "../../components/ui/button/button";
 import reg from "../../shared/api/requests/register/register";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../store/slices/userSlice";
 export interface FormData {
   password: string;
   lastname: string;
@@ -14,6 +17,7 @@ export interface FormData {
 interface ApiResponse {
   data: {
     token: string;
+    name: string;
   };
 }
 interface ApiError {
@@ -21,6 +25,8 @@ interface ApiError {
   message: string;
 }
 function Register() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {
     register,
     formState: { errors },
@@ -33,9 +39,17 @@ function Register() {
     console.log(data);
     reg(data)
       .then((response: ApiResponse) => {
-        const { token } = response.data;
-        localStorage.setItem("token", token);
         console.log(response);
+        const { token, name } = response.data;
+        localStorage.setItem("token", token);
+        console.log(response.data.token);
+        dispatch(
+          setUser({
+            fullName: name,
+            token: token,
+          })
+        );
+        navigate("/profile");
       })
       .catch((error: ApiError) => {
         if (error.response) {
@@ -68,6 +82,7 @@ function Register() {
         <Input<FormData>
           register={register}
           name="password"
+          type="password"
           placeholder="Пароль"
           errors={errors}
         />

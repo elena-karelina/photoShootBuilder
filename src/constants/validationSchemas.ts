@@ -17,6 +17,24 @@ export const editProfileValidationSchema = yup.object().shape({
   name: yup.string().required("Поле обязательно к заполнению"),
   photo: yup.mixed(),
   city: yup.string().required("Поле обязательно к заполнению"),
-  inst: yup.string(),
-  tg: yup.string(),
+  inst: yup.string().nullable(),
+  tg: yup.string().nullable(),
+});
+export const addServiceValidationSchema = yup.object().shape({
+  type: yup.string().required("Поле обязательно к заполнению"),
+  name: yup.string().required("Поле обязательно к заполнению"),
+  photo: yup
+    .mixed<FileList>()
+    .test("fileRequired", "Выберите хотя бы один файл", (value) => {
+      if (value instanceof FileList) {
+        return value.length > 0;
+      }
+      return false;
+    })
+    .required("Поле обязательно к заполнению"),
+  description: yup.string(),
+  price: yup.string().required("Поле обязательно к заполнению"),
+  weekends: yup.mixed<string[]>(),
+  workHours: yup.mixed<number[]>().required("Укажите рабочие часы"),
+  timeSlot: yup.number().required("Поле обязательно к заполнению"),
 });

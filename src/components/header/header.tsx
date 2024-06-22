@@ -3,8 +3,29 @@ import Logo from "../ui/logo/logo";
 import { MenuOutlined } from "@ant-design/icons";
 import styles from "./header.module.css";
 import Menu from "./menu";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
+import logout from "../../shared/api/requests/logout/logout";
+import { removeUser } from "../../store/slices/userSlice";
 
 function Header() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useAuth();
+  const heandleLogout = () => {
+    user.token &&
+      logout(user.token)
+        .then((response: object) => {
+          console.log(response);
+        })
+        .catch((error: object) => {
+          console.log(error);
+        });
+    dispatch(removeUser());
+    navigate("/");
+  };
+
   return (
     <div className={styles.header}>
       <div className={styles.left}>
@@ -21,16 +42,35 @@ function Header() {
         <div className={styles.reqister}>
           <Link to="/menu">Меню</Link>{" "}
         </div>
-        <div className={styles.reqister}>
-          <Link to="/profile">Профиль</Link>{" "}
-        </div>
-        <div className={styles.reqister}>
-          <Link to="/register">Регистрация</Link>{" "}
-        </div>
 
-        <div className={styles.signin}>
-          <Link to="/logIn">Вход</Link>
-        </div>
+        {user.isAuth && (
+          <div className={styles.reqister}>
+            <Link to="/profile">Профиль</Link>
+          </div>
+        )}
+        {user.isAuth && (
+          <div className={styles.reqister}>
+            <Link to="/profile">Заявка</Link>
+          </div>
+        )}
+        {user.isAuth && (
+          <div className={styles.reqister}>
+            <Link to="/" onClick={heandleLogout}>
+              Выйти
+            </Link>
+          </div>
+        )}
+        {!user.isAuth && (
+          <div className={styles.reqister}>
+            <Link to="/register">Регистрация</Link>{" "}
+          </div>
+        )}
+
+        {!user.isAuth && (
+          <div className={styles.signin}>
+            <Link to="/logIn">Вход</Link>
+          </div>
+        )}
       </div>
     </div>
   );

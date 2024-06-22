@@ -1,0 +1,20 @@
+.service_wrapper {
+  width: 100%;
+}
+.service {
+  /* background-color: rgb(221, 215, 226); */
+  /* box-shadow: 0 0 10px rgba(157, 95, 162, 0.7),
+    0 0 15px rgba(190, 121, 205, 0.7), 0 0 30px rgba(179, 112, 182, 0.7); */
+  box-shadow: 0px 10px 10px 7px rgb(213, 194, 223);
+  box-sizing: border-box;
+  margin-top: 40px;
+  border-radius: 20px 20px 0 0;
+  padding: 30px 50px;
+  min-height: calc(100vh - 70px);
+}
+.slider {
+  display: inline-block;
+  width: 350px;
+  float: left;
+  margin-right: 30px;
+}

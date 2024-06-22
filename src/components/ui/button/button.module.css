@@ -15,11 +15,17 @@
   opacity: 0.8;
 }
 
-.form {
+.form,
+.form_close {
   width: auto;
-  padding: 10px 22px;
+  padding: 8px 22px;
   font-size: 14px;
   box-shadow: 0 0 10px 0 rgb(167, 112, 187);
+}
+.form_close {
+  background-color: rgba(189, 181, 189, 0.781);
+  box-shadow: 0 0 10px 0 rgb(168, 163, 170);
+  margin-left: 15px;
 }
 .small {
   width: auto;
