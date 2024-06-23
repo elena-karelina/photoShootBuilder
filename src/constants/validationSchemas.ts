@@ -33,8 +33,24 @@ export const addServiceValidationSchema = yup.object().shape({
     })
     .required("Поле обязательно к заполнению"),
   description: yup.string(),
-  price: yup.string().required("Поле обязательно к заполнению"),
-  weekends: yup.mixed<string[]>(),
-  workHours: yup.mixed<number[]>().required("Укажите рабочие часы"),
-  timeSlot: yup.number().required("Поле обязательно к заполнению"),
+  cost: yup
+    .number()
+    .required("Поле обязательно к заполнению")
+    .positive("Стоимость должна быть положительной"),
+  schedule: yup.object().shape({
+    monStart: yup.string(),
+    monEnd: yup.string(),
+    tueStart: yup.string(),
+    tueEnd: yup.string(),
+    wedStart: yup.string(),
+    wedEnd: yup.string(),
+    thuStart: yup.string(),
+    thuEnd: yup.string(),
+    friStart: yup.string(),
+    friEnd: yup.string(),
+    satStart: yup.string(),
+    satEnd: yup.string(),
+    sunStart: yup.string(),
+    sunEnd: yup.string(),
+  }),
 });

@@ -1,67 +1,112 @@
-import { FieldErrors, SubmitHandler, useForm } from "react-hook-form";
+import {
+  Controller,
+  FieldErrors,
+  SubmitHandler,
+  useForm,
+} from "react-hook-form";
 import Input from "../../../../components/ui/input/input";
 import styles from "./addService.module.css";
-import { Checkbox, ConfigProvider, Select, Slider } from "antd";
+import { ConfigProvider, InputNumber, Select } from "antd";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { addServiceValidationSchema } from "../../../../constants/validationSchemas";
 import Button from "../../../../components/ui/button/button";
 import Textarea from "../../../../components/ui/textarea/textarea";
-import DecimalStep from "../slider/slider";
-import { QuestionCircleOutlined } from "@ant-design/icons";
-
-import Hints from "../tooltip/tooltip";
+import { Dayjs } from "dayjs";
+import DayShedule from "./dayShedule";
+import { useState } from "react";
 
 interface FormData {
   photo: FileList;
   name: string;
   type: string;
   description?: string;
-  price: string;
-  weekends?: string[];
-  workHours: number[];
-  timeSlot: number;
+  cost: number;
+  schedule: {
+    monStart?: string;
+    monEnd?: string;
+    tueStart?: string;
+    tueEnd?: string;
+    wedStart?: string;
+    wedEnd?: string;
+    thuStart?: string;
+    thuEnd?: string;
+    friStart?: string;
+    friEnd?: string;
+    satStart?: string;
+    satEnd?: string;
+    sunStart?: string;
+    sunEnd?: string;
+  };
 }
 interface Props {
   onSave: () => void;
 }
+const defaultSchedule = {
+  monStart: "08:00",
+  monEnd: "20:00",
+  tueStart: "08:00",
+  tueEnd: "20:00",
+  wedStart: "08:00",
+  wedEnd: "20:00",
+  thuStart: "08:00",
+  thuEnd: "20:00",
+  friStart: "08:00",
+  friEnd: "20:00",
+  satStart: "08:00",
+  satEnd: "20:00",
+  sunStart: "08:00",
+  sunEnd: "20:00",
+};
 const AddService: React.FC<Props> = ({ onSave }) => {
   const {
     register,
     formState: { errors },
     handleSubmit,
     setValue,
-    reset,
+    control,
+    //reset,
   } = useForm({
     resolver: yupResolver(addServiceValidationSchema),
     mode: "onBlur",
     defaultValues: {
-      workHours: [8, 18],
-      timeSlot: 1,
+      schedule: defaultSchedule,
+      cost: 1000,
     },
   });
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
+  const onSubmit: SubmitHandler<object> = (data) => {
     console.log(data);
     //onSave();
   };
-  const options = [
-    { label: "Понедельник", value: "Monday" },
-    { label: "Вторник", value: "Tuesday" },
-    { label: "Среда", value: "Wednesday" },
-    { label: "Четверг", value: "Thursday" },
-    { label: "Пятница", value: "Friday" },
-    { label: "Суббота", value: "Saturday" },
-    { label: "Воскресенье", value: "Sunday" },
+  const daysOfWeek = [
+    { day: "Понедельник", key: "mon" },
+    { day: "Вторник", key: "tue" },
+    { day: "Среда", key: "wed" },
+    { day: "Четверг", key: "thu" },
+    { day: "Пятница", key: "fri" },
+    { day: "Суббота", key: "sat" },
+    { day: "Воскресенье", key: "sun" },
   ];
-  const handleWeekendsChange = (checkedValues: string[]) => {
-    setValue("weekends", checkedValues);
-    console.log(checkedValues);
-  };
-  const handleSliderChange = (value: number[]) => {
-    setValue("workHours", value);
-  };
-  const handleTimeSlotChange = (value: number) => {
-    setValue("timeSlot", value);
+
+  const [schedule, setSchedule] = useState<{ [key: string]: string }>(
+    defaultSchedule
+  );
+
+  const handleScheduleChange = (key: string, times: [Dayjs, Dayjs] | null) => {
+    setSchedule((prevSchedule) => {
+      if (times === null) {
+        const newSchedule = { ...prevSchedule };
+        delete newSchedule[`${key}Start`];
+        delete newSchedule[`${key}End`];
+        return newSchedule;
+      } else {
+        return {
+          ...prevSchedule,
+          [`${key}Start`]: times[0].format("HH:mm"),
+          [`${key}End`]: times[1].format("HH:mm"),
+        };
+      }
+    });
   };
 
   return (
@@ -111,48 +156,41 @@ const AddService: React.FC<Props> = ({ onSave }) => {
             register={register}
             name="description"
           />
-          <div>Прайс</div>
-          <Textarea
-            register={register}
-            errors={errors as FieldErrors<FormData>}
-            name="price"
-          />
-          <div className={styles.weekends}>
-            <span>
-              <Hints title="Эти дни будут не активны во всем расписании">
-                <QuestionCircleOutlined style={{ marginRight: "5px" }} />
-              </Hints>
-              Выходные:
-            </span>
-
-            <div className={styles.weekends_checkbox}>
-              <Checkbox.Group
-                options={options}
-                onChange={handleWeekendsChange}
-              />
-            </div>
-          </div>
-          <div className={styles.slots}>
-            <div>Рабочий день:</div>
-            <Slider
-              range
-              defaultValue={[8, 18]}
-              min={0}
-              max={24}
-              step={0.1}
-              tooltip={{ open: true }}
-              onChange={handleSliderChange}
+          <div>
+            Стоимость:
+            <Controller
+              name="cost"
+              control={control}
+              render={({ field }) => (
+                <InputNumber
+                  {...field}
+                  className={styles.cost}
+                  defaultValue={1000}
+                  min={0}
+                  formatter={(value) =>
+                    `${value} ₽`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                  }
+                  parser={(value) =>
+                    value?.replace(/\₽\s?|(,*)/g, "") as unknown as number
+                  }
+                  onChange={(value) => field.onChange(value)}
+                />
+              )}
             />
           </div>
-          <div className={styles.slots}>
-            <div>
-              <Hints title="Выберите длину отрезков в часах, на которые поделить ваш рабочий день">
-                <QuestionCircleOutlined style={{ marginRight: "5px" }} />
-              </Hints>
-              Размер временных слотов:
-            </div>
-            <DecimalStep onChange={handleTimeSlotChange} />
+
+          <div>Расписание:</div>
+          <div className={styles.days}>
+            {daysOfWeek.map(({ day, key }) => (
+              <DayShedule
+                key={key}
+                day={day}
+                keyName={key}
+                onScheduleChange={handleScheduleChange}
+              />
+            ))}
           </div>
+
           <div>
             <Button type="submit" variant="form">
               Добавить
