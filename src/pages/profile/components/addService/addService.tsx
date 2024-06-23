@@ -13,9 +13,11 @@ import Button from "../../../../components/ui/button/button";
 import Textarea from "../../../../components/ui/textarea/textarea";
 import { Dayjs } from "dayjs";
 import DayShedule from "./dayShedule";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import addService from "../../../../shared/api/requests/profile/addService";
+import { useAuth } from "../../../../hooks/useAuth";
 
-interface FormData {
+export interface FormData {
   photo: FileList;
   name: string;
   type: string;
@@ -39,7 +41,7 @@ interface FormData {
   };
 }
 interface Props {
-  onSave: () => void;
+  Cansel: () => void;
 }
 const defaultSchedule = {
   monStart: "08:00",
@@ -57,7 +59,8 @@ const defaultSchedule = {
   sunStart: "08:00",
   sunEnd: "20:00",
 };
-const AddService: React.FC<Props> = ({ onSave }) => {
+const AddService: React.FC<Props> = ({ Cansel }) => {
+  const user = useAuth();
   const {
     register,
     formState: { errors },
@@ -74,9 +77,17 @@ const AddService: React.FC<Props> = ({ onSave }) => {
     },
   });
 
-  const onSubmit: SubmitHandler<object> = (data) => {
+  const onSubmit: SubmitHandler<FormData> = (data) => {
     console.log(data);
-    //onSave();
+
+    addService(data, Number(user.id) as number, user.fullName as string)
+      .then((response: object) => {
+        console.log(response);
+        Cansel();
+      })
+      .catch((error: object) => {
+        console.log(error);
+      });
   };
   const daysOfWeek = [
     { day: "Понедельник", key: "mon" },
@@ -108,6 +119,9 @@ const AddService: React.FC<Props> = ({ onSave }) => {
       }
     });
   };
+  useEffect(() => {
+    setValue("schedule", schedule);
+  }, [schedule, setValue]);
 
   return (
     <div className={styles.service_wrapper}>
@@ -198,7 +212,7 @@ const AddService: React.FC<Props> = ({ onSave }) => {
             <Button
               type="button"
               onClick={() => {
-                onSave();
+                Cansel();
               }}
               variant="form_close"
             >

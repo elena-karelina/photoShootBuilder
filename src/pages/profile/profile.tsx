@@ -14,6 +14,7 @@ import Textarea from "../../components/ui/textarea/textarea";
 import { useAuth } from "../../hooks/useAuth";
 import { setUser } from "../../store/slices/userSlice";
 import Card from "../../components/ui/card/card";
+import editDescription from "../../shared/api/requests/profile/editDescription";
 
 export type UserData = {
   photo?: string;
@@ -33,6 +34,7 @@ function Profile() {
       city: string;
       instagram: string;
       telegram: string;
+      description: string;
     };
   }
 
@@ -40,6 +42,7 @@ function Profile() {
   const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();
   const user = useAuth();
+  if (user.token) localStorage.setItem("token", user.token);
   const IconComponent = userData?.description ? EditOutlined : PlusOutlined;
   const descComponent = userData?.description ? (
     userData.description
@@ -48,7 +51,7 @@ function Profile() {
   ) : (
     <></>
   );
-  const [editDescription, setEditDescription] = useState<boolean>(false);
+  const [isEditDescription, setEditDescription] = useState<boolean>(false);
   const [addService, setAddService] = useState<boolean>(false);
   const [textareaValue, setTextareaValue] = useState(userData?.description);
   const handleTextareaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -94,11 +97,19 @@ function Profile() {
         ...prevUserData,
         description: textareaValue,
       }));
+    editDescription(textareaValue ? textareaValue : null)
+      .then((response: ApiResponse) => {
+        console.log(response);
+      })
+      .catch((error: object) => {
+        console.log(error);
+      });
     console.log(userData?.description);
   };
 
   const fetchData = async () => {
     if (user && user.token) {
+      console.log(1);
       await getData(user.token)
         .then((response: ApiResponse) => {
           console.log(response);
@@ -109,6 +120,7 @@ function Profile() {
             city: userData.city,
             tg: userData.telegram,
             inst: userData.instagram,
+            description: userData.description,
           }));
           setIsLoaded(true);
           dispatch(
@@ -174,7 +186,7 @@ function Profile() {
                 {userData?.description ? "Изменить " : "Добавить "}
                 описание
               </span>
-              {editDescription ? (
+              {isEditDescription ? (
                 <>
                   <Textarea
                     onChange={handleTextareaChange}
@@ -199,7 +211,7 @@ function Profile() {
             </div>
             <div className={styles.addServices}>
               {addService ? (
-                <AddService onSave={() => setAddService(false)} />
+                <AddService Cansel={() => setAddService(false)} />
               ) : (
                 <span onClick={() => setAddService(true)}>
                   <PlusOutlined />
