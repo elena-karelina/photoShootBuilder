@@ -2,9 +2,12 @@ import { useEffect, useState } from "react";
 import Slider from "../../components/ui/slider/slider";
 import getServiceInfo from "../../shared/api/requests/service/getServiceInfo";
 import styles from "./service.module.css";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../../components/ui/loading/loading";
 import { DeleteOutlined, FormOutlined } from "@ant-design/icons";
+import Form from "./modal/form";
+import { useAuth } from "../../hooks/useAuth";
+import deleteService from "../../shared/api/requests/service/deleteService";
 
 export interface ServiceData {
   id: 0;
@@ -36,9 +39,11 @@ interface apiRes {
 }
 
 function Service() {
+  const user = useAuth();
   const [isLoaded, setIsLoaded] = useState(false);
   const [serviceData, setServiceData] = useState<ServiceData>();
   const { id } = useParams();
+  const navigate = useNavigate();
   const fetchData = async () => {
     await getServiceInfo(Number(id))
       .then((response: apiRes) => {
@@ -46,6 +51,16 @@ function Service() {
 
         setServiceData(response.data);
         setIsLoaded(true);
+      })
+      .catch((error: object) => {
+        console.log(error);
+      });
+  };
+  const deleteThisService = async () => {
+    await deleteService(Number(id))
+      .then((response: object) => {
+        console.log(response);
+        navigate("/menu");
       })
       .catch((error: object) => {
         console.log(error);
@@ -71,18 +86,35 @@ function Service() {
               <Slider type="profile" />
             </div>
             <div>
-              <div>
-                <div className={styles.name}>
-                  {serviceData?.itemName}{" "}
-                  <FormOutlined
-                    style={{ fontSize: "24px", marginLeft: "20px" }}
-                  />
-                  <DeleteOutlined
-                    style={{ fontSize: "24px", marginLeft: "20px" }}
-                  />
+              {user.isAuth && (
+                <div>
+                  <div style={{ textAlign: "right" }} className={styles.icons}>
+                    <span>Добавить в заявку</span>
+                    {Number(user.id) == serviceData?.ownerUserId && (
+                      <>
+                        <Form
+                          data={serviceData}
+                          onSave={(data) => setServiceData(data)}
+                        >
+                          <FormOutlined
+                            style={{ fontSize: "24px", marginLeft: "20px" }}
+                          />
+                        </Form>
+                        <DeleteOutlined
+                          style={{ fontSize: "24px", marginLeft: "20px" }}
+                          onClick={deleteThisService}
+                        />
+                      </>
+                    )}
+                  </div>
+                  <div>
+                    <div className={styles.name}>{serviceData?.itemName} </div>
+                    <p className={styles.author}>
+                      By: {serviceData?.ownerName}
+                    </p>
+                  </div>
                 </div>
-                <p className={styles.author}>By: {serviceData?.ownerName}</p>
-              </div>
+              )}
 
               <div className={styles.cost}>
                 Цена: <span>{serviceData?.costPerHour}₽</span>

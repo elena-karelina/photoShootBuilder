@@ -127,33 +127,35 @@ function Profile() {
   const fetchData = async () => {
     if (user && user.token) {
       console.log(1);
-      await getData(user.token)
-        .then((response: ApiResponse) => {
-          console.log(response);
-          const userData = response.data;
-          setUserData((prevUserData) => ({
-            ...prevUserData,
-            name: userData.name,
-            city: userData.city,
-            tg: userData.telegram,
-            inst: userData.instagram,
-            description: userData.description,
-          }));
-          setIsLoaded(true);
-          dispatch(
-            setUser({
-              fullName: userData.name,
+      user.id &&
+        (await getData(user.id)
+          .then((response: ApiResponse) => {
+            console.log(response);
+            const userData = response.data;
+            setUserData((prevUserData) => ({
+              ...prevUserData,
+              name: userData.name,
               city: userData.city,
               tg: userData.telegram,
               inst: userData.instagram,
-              id: String(userData.id),
-            })
-          );
-          console.log(user);
-        })
-        .catch((error: object) => {
-          console.log(error);
-        });
+              description: userData.description,
+              photo: userData.avatar,
+            }));
+            setIsLoaded(true);
+            dispatch(
+              setUser({
+                fullName: userData.name,
+                city: userData.city,
+                tg: userData.telegram,
+                inst: userData.instagram,
+                id: String(userData.id),
+              })
+            );
+            console.log(user);
+          })
+          .catch((error: object) => {
+            console.log(error, user);
+          }));
     }
     await getServices(Number(id))
       .then((response: GetServicesResponse) => {

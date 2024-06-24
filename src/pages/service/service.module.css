@@ -18,6 +18,7 @@
   flex-direction: column;
   justify-content: space-between;
   padding-bottom: 30px;
+  flex: 2;
 }
 .slider {
   width: 450px;
@@ -37,6 +38,9 @@
   font-weight: 500;
   color: rgb(136, 135, 136);
   margin-bottom: 0;
+}
+.icons > * {
+  cursor: pointer;
 }
 .cost {
   font-size: 22px;
@@ -96,5 +100,21 @@
 @media (max-width: 700px) {
   .slider {
     width: 100%;
+  }
+}
+@media (max-width: 472px) {
+  .schedule {
+    font-size: 14px;
+    column-gap: 11px;
+    /* grid-template-columns: 100%; */
+  }
+  .name {
+    font-size: 36px;
+  }
+  .author {
+    font-size: 20px;
+  }
+  .cost {
+    font-size: 18px;
   }
 }

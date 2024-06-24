@@ -1,0 +1,36 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  padding-top: 15px;
+  gap: 15px;
+}
+.form > button {
+  margin-top: 20px;
+}
+
+.days {
+  font-size: 15px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+}
+.days > div {
+  display: flex;
+  column-gap: 15px;
+  align-items: center;
+}
+.day > *:first-child {
+  min-width: 100px;
+}
+.cost {
+  margin-left: 20px;
+}
+@media (max-width: 600px) {
+  .days > div {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .days {
+    row-gap: 10px;
+  }
+}

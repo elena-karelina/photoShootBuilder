@@ -157,7 +157,7 @@ const AddService: React.FC<Props> = ({ Cansel, onSave }) => {
               { value: "1", label: "Реквизит" },
               { value: "2", label: "Техника" },
               { value: "3", label: "Помещения и места" },
-              { value: "4", label: "Услуги фотографи" },
+              { value: "4", label: "Услуги фотографа" },
               { value: "5", label: "Услуги фидеографа" },
               { value: "6", label: "Услуги визажиста" },
               { value: "7", label: "Другое" },

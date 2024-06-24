@@ -17,6 +17,7 @@ interface ApiResponse {
   data: {
     token: string;
     name: string;
+    id: string;
   };
 }
 interface ApiError {
@@ -38,16 +39,17 @@ function Login() {
     console.log(data);
     login(data)
       .then((response: ApiResponse) => {
-        const { token } = response.data;
+        const { token, id } = response.data;
         localStorage.setItem("token", token);
         console.log(response);
         dispatch(
           setUser({
             fullName: response.data.name,
             token: token,
+            id: id,
           })
         );
-        navigate(`/profile/8`);
+        navigate(`/profile/${id}`);
       })
       .catch((error: ApiError) => {
         console.log(error);

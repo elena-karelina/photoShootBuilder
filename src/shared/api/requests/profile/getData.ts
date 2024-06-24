@@ -1,9 +1,4 @@
 import instance from "../axiosInstance";
-const getData = (token: string) =>
-  instance.get("profile", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+const getData = (id: string) => instance.get(`profile?id=${Number(id)}`);
 
 export default getData;

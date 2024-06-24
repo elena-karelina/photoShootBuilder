@@ -1,0 +1,20 @@
+@media (max-width: 590px) {
+  .profile {
+    height: 370px !important;
+  }
+}
+@media (max-width: 560px) {
+  .profile {
+    height: 320px !important;
+  }
+}
+@media (max-width: 475px) {
+  .profile {
+    height: 270px !important;
+  }
+}
+@media (max-width: 420px) {
+  .profile {
+    height: 230px !important;
+  }
+}
