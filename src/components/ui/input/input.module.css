@@ -56,7 +56,12 @@ input[type="file"]::-webkit-file-upload-button:hover {
 .addService {
   border-radius: 5px;
   border-color: rgba(157, 95, 162, 0.7);
-  width: 250px;
+  max-width: 250px;
   padding-block: 8px;
   font-size: 14px;
+}
+@media (max-width: 360px) {
+  input[type="file"] {
+    display: flex;
+  }
 }

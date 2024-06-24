@@ -13,8 +13,12 @@ import getData from "../../shared/api/requests/profile/getData";
 import Textarea from "../../components/ui/textarea/textarea";
 import { useAuth } from "../../hooks/useAuth";
 import { setUser } from "../../store/slices/userSlice";
-import Card from "../../components/ui/card/card";
+import Card, { Item } from "../../components/ui/card/card";
 import editDescription from "../../shared/api/requests/profile/editDescription";
+import editData from "../../shared/api/requests/profile/editData";
+import { useParams } from "react-router-dom";
+import getServices from "../../shared/api/requests/profile/getServices";
+import Loading from "../../components/ui/loading/loading";
 
 export type UserData = {
   photo?: string;
@@ -38,8 +42,14 @@ function Profile() {
     };
   }
 
+  interface GetServicesResponse {
+    data: { items: Item[] };
+  }
+  const { id } = useParams();
   const [userData, setUserData] = useState<UserData>();
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoadedServices, setIsLoadedServices] = useState(false);
+  const [serviceList, setServiceList] = useState<Item[]>([]);
   const dispatch = useDispatch();
   const user = useAuth();
   if (user.token) localStorage.setItem("token", user.token);
@@ -89,6 +99,13 @@ function Profile() {
         inst: data.inst ? data.inst : "",
       })
     );
+    editData(data)
+      .then((response: object) => {
+        console.log(response);
+      })
+      .catch((error: object) => {
+        console.log(error);
+      });
   };
   const editDataDescription = () => {
     console.log(textareaValue);
@@ -138,12 +155,22 @@ function Profile() {
           console.log(error);
         });
     }
+    await getServices(Number(id))
+      .then((response: GetServicesResponse) => {
+        console.log("Услуги профиля", response.data.items);
+        setServiceList(response.data.items);
+        setIsLoadedServices(true);
+      })
+      .catch((error: object) => {
+        console.log(error);
+      });
   };
 
   useEffect(() => {
     fetchData();
   }, []);
-  if (isLoaded)
+  if (!isLoaded) return <Loading />;
+  else
     return (
       <div className={styles.profile_wrapper}>
         <div className={styles.profile}>
@@ -211,7 +238,15 @@ function Profile() {
             </div>
             <div className={styles.addServices}>
               {addService ? (
-                <AddService Cansel={() => setAddService(false)} />
+                <AddService
+                  Cansel={() => setAddService(false)}
+                  onSave={(data: Item) =>
+                    setServiceList((prevServiceList) => [
+                      ...prevServiceList,
+                      data,
+                    ])
+                  }
+                />
               ) : (
                 <span onClick={() => setAddService(true)}>
                   <PlusOutlined />
@@ -219,17 +254,18 @@ function Profile() {
                 </span>
               )}
             </div>
+            {!isLoadedServices && <Loading />}
 
-            <div className={styles.services}>
-              <div>Услуги</div>
-              <div className={styles.services_card}>
-                <Card type="profile" />
-                <Card type="profile" />
-                <Card type="profile" />
-                <Card type="profile" />
-                <Card type="profile" />
+            {serviceList.length > 0 && (
+              <div className={styles.services}>
+                <div>Услуги</div>
+                <div className={styles.services_card}>
+                  {serviceList.map((item, key) => (
+                    <Card key={key} type="profile" data={item} />
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

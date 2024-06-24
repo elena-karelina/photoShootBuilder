@@ -3,7 +3,9 @@
   gap: 15px;
   overflow-x: auto;
   padding-bottom: 8px;
+  max-width: fit-content;
 }
+
 .cards::-webkit-scrollbar {
   background-color: rgb(233, 233, 233); /* цвет бегунка */
   border-radius: 20px; /* округлось бегунка */

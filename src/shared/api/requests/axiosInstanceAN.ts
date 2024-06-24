@@ -4,7 +4,6 @@ import axios, {
   AxiosInstance,
   AxiosHeaders,
 } from "axios";
-import { useAuth } from "../../../hooks/useAuth";
 
 const apiUrl: string = import.meta.env.VITE_BACK_URL_ANYA as string;
 
@@ -14,8 +13,7 @@ const instance: AxiosInstance = axios.create({
 
 instance.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    const user = useAuth();
-    const token = user.token;
+    const token = localStorage.getItem("token");
     if (token) {
       if (!config.headers) {
         config.headers = new AxiosHeaders();

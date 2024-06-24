@@ -16,6 +16,7 @@ import DayShedule from "./dayShedule";
 import { useEffect, useState } from "react";
 import addService from "../../../../shared/api/requests/profile/addService";
 import { useAuth } from "../../../../hooks/useAuth";
+import { Item } from "../../../../components/ui/card/card";
 
 export interface FormData {
   photo: FileList;
@@ -42,6 +43,7 @@ export interface FormData {
 }
 interface Props {
   Cansel: () => void;
+  onSave: (data: Item) => void;
 }
 const defaultSchedule = {
   monStart: "08:00",
@@ -59,7 +61,7 @@ const defaultSchedule = {
   sunStart: "08:00",
   sunEnd: "20:00",
 };
-const AddService: React.FC<Props> = ({ Cansel }) => {
+const AddService: React.FC<Props> = ({ Cansel, onSave }) => {
   const user = useAuth();
   const {
     register,
@@ -76,13 +78,16 @@ const AddService: React.FC<Props> = ({ Cansel }) => {
       cost: 1000,
     },
   });
-
+  interface UserServicesResponse {
+    data: Item;
+  }
   const onSubmit: SubmitHandler<FormData> = (data) => {
     console.log(data);
 
     addService(data, Number(user.id) as number, user.fullName as string)
-      .then((response: object) => {
+      .then((response: UserServicesResponse) => {
         console.log(response);
+        onSave(response.data);
         Cansel();
       })
       .catch((error: object) => {
@@ -185,7 +190,7 @@ const AddService: React.FC<Props> = ({ Cansel }) => {
                     `${value} ₽`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                   }
                   parser={(value) =>
-                    value?.replace(/\₽\s?|(,*)/g, "") as unknown as number
+                    value?.replace(/₽\s?|(,*)/g, "") as unknown as number
                   }
                   onChange={(value) => field.onChange(value)}
                 />

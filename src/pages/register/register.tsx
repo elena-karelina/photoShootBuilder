@@ -18,6 +18,7 @@ interface ApiResponse {
   data: {
     token: string;
     name: string;
+    id: string;
   };
 }
 interface ApiError {
@@ -40,16 +41,17 @@ function Register() {
     reg(data)
       .then((response: ApiResponse) => {
         console.log(response);
-        const { token, name } = response.data;
+        const { token, name, id } = response.data;
         localStorage.setItem("token", token);
         console.log(response.data.token);
         dispatch(
           setUser({
             fullName: name,
             token: token,
+            id: id,
           })
         );
-        navigate("/profile");
+        navigate(`{"/profile/${id}"}`);
       })
       .catch((error: ApiError) => {
         if (error.response) {

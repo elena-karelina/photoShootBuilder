@@ -44,10 +44,10 @@ function Login() {
         dispatch(
           setUser({
             fullName: response.data.name,
-            token: response.data.token,
+            token: token,
           })
         );
-        navigate("/profile");
+        navigate(`/profile/8`);
       })
       .catch((error: ApiError) => {
         console.log(error);

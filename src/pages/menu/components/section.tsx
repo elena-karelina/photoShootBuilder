@@ -1,9 +1,21 @@
 import { useEffect, useRef } from "react";
-import { RightOutlined } from "@ant-design/icons";
 import styles from "./components.module.css";
 import Card from "../../../components/ui/card/card";
 
-function Section() {
+interface Item {
+  id: number;
+  ownerUserId: number;
+  ownerName: string;
+  itemName: string;
+  itemDescription: string;
+  costPerHour: number;
+  itemType: number;
+}
+interface Props {
+  items: Item[];
+  name: string;
+}
+const Section: React.FC<Props> = ({ items, name }) => {
   const cardsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -22,21 +34,17 @@ function Section() {
       };
     }
   }, []);
-  return (
-    <div className={styles.section}>
-      <h3 className={styles.title}>
-        Фотографы <RightOutlined style={{ fontSize: "18px" }} />
-      </h3>
-      <div className={styles.cards} ref={cardsRef}>
-        <Card type="menu" />
-        <Card type="menu" />
-        <Card type="menu" />
-        <Card type="menu" />
-        <Card type="menu" />
-        <Card type="menu" />
+  if (items.length > 0)
+    return (
+      <div className={styles.section}>
+        <h3 className={styles.title}>{name}:</h3>
+        <div className={styles.cards} ref={cardsRef}>
+          {items.map((item, key) => (
+            <Card key={key} type="menu" data={item} />
+          ))}
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+};
 
 export default Section;

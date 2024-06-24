@@ -45,7 +45,7 @@ function Header() {
 
         {user.isAuth && (
           <div className={styles.reqister}>
-            <Link to="/profile">Профиль</Link>
+            <Link to={`/profile/${user.id}`}>Профиль</Link>
           </div>
         )}
         {user.isAuth && (

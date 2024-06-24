@@ -43,3 +43,12 @@
 .cost {
   margin-left: 20px;
 }
+@media (max-width: 600px) {
+  .days > div {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .days {
+    row-gap: 10px;
+  }
+}
