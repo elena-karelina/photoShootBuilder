@@ -15,6 +15,7 @@ function Menu() {
     itemDescription: string;
     costPerHour: number;
     itemType: number;
+    pictures: string;
   }
   interface Sections {
     clothesAndShoes: { items: Item[] };

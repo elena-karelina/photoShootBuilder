@@ -8,9 +8,14 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import logout from "../../shared/api/requests/logout/logout";
 import { removeUser } from "../../store/slices/userSlice";
+import { useSelector, TypedUseSelectorHook } from "react-redux";
+import { RootState } from "../../store/store";
+import { removeOrder } from "../../store/slices/orderSlice";
 
 function Header() {
   const dispatch = useDispatch();
+  const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+  const { amount } = useAppSelector((state) => state.order);
   const navigate = useNavigate();
   const user = useAuth();
   const heandleLogout = () => {
@@ -23,6 +28,7 @@ function Header() {
           console.log(error);
         });
     dispatch(removeUser());
+    dispatch(removeOrder());
     navigate("/");
   };
 
@@ -49,8 +55,9 @@ function Header() {
           </div>
         )}
         {user.isAuth && (
-          <div className={styles.reqister}>
-            <Link to="/service">Заявка</Link>
+          <div className={styles.order}>
+            <Link to="/order">Заявка</Link>
+            {amount > 0 && <span>{amount}</span>}
           </div>
         )}
         {user.isAuth && (

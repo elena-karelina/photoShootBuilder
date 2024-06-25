@@ -79,3 +79,15 @@ export const editServiceValidationSchema = yup.object().shape({
     sunEnd: yup.string(),
   }),
 });
+export const createOrderValidationSchema = yup.object().shape({
+  name: yup.string().required("Поле обязательно к заполнению"),
+  description: yup.string(),
+  itemsInApplication: yup.array().of(
+    yup.object().shape({
+      itemId: yup.number().required(),
+      ownerId: yup.number().required(),
+      dateTimeStart: yup.string().required(),
+      dateTimeEnd: yup.string().required(),
+    })
+  ),
+});

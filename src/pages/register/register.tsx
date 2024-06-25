@@ -51,7 +51,7 @@ function Register() {
             id: id,
           })
         );
-        navigate(`{"/profile/${id}"}`);
+        navigate(`/profile/${id}`);
       })
       .catch((error: ApiError) => {
         if (error.response) {

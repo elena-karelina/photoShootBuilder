@@ -10,6 +10,7 @@ interface Item {
   itemDescription: string;
   costPerHour: number;
   itemType: number;
+  pictures: string;
 }
 interface Props {
   items: Item[];
@@ -17,7 +18,6 @@ interface Props {
 }
 const Section: React.FC<Props> = ({ items, name }) => {
   const cardsRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     const cardsContainer = cardsRef.current;
 

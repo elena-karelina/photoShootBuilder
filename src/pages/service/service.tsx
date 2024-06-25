@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import Slider from "../../components/ui/slider/slider";
 import getServiceInfo from "../../shared/api/requests/service/getServiceInfo";
 import styles from "./service.module.css";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Loading from "../../components/ui/loading/loading";
 import { DeleteOutlined, FormOutlined } from "@ant-design/icons";
 import Form from "./modal/form";
+import { useDispatch } from "react-redux";
 import { useAuth } from "../../hooks/useAuth";
 import deleteService from "../../shared/api/requests/service/deleteService";
+import { addService } from "../../store/slices/orderSlice";
 
 export interface ServiceData {
   id: 0;
@@ -40,6 +42,7 @@ interface apiRes {
 
 function Service() {
   const user = useAuth();
+  const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   const [serviceData, setServiceData] = useState<ServiceData>();
   const { id } = useParams();
@@ -76,6 +79,21 @@ function Service() {
   ) : (
     <></>
   );
+  const addToOrder = () => {
+    if (serviceData?.id) {
+      dispatch(
+        addService({
+          item: {
+            id: serviceData.id,
+            name: serviceData.itemName,
+            ownerName: serviceData.ownerName,
+            cost: serviceData.costPerHour,
+            ownerId: serviceData.ownerUserId,
+          },
+        })
+      );
+    }
+  };
   if (!isLoaded) return <Loading />;
   else
     return (
@@ -89,7 +107,7 @@ function Service() {
               {user.isAuth && (
                 <div>
                   <div style={{ textAlign: "right" }} className={styles.icons}>
-                    <span>Добавить в заявку</span>
+                    <span onClick={addToOrder}>Добавить в заявку</span>
                     {Number(user.id) == serviceData?.ownerUserId && (
                       <>
                         <Form
@@ -109,9 +127,12 @@ function Service() {
                   </div>
                   <div>
                     <div className={styles.name}>{serviceData?.itemName} </div>
-                    <p className={styles.author}>
+                    <Link
+                      to={`/profile/${serviceData?.ownerUserId}`}
+                      className={styles.author}
+                    >
                       By: {serviceData?.ownerName}
-                    </p>
+                    </Link>
                   </div>
                 </div>
               )}

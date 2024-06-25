@@ -128,7 +128,7 @@ function Profile() {
     if (user && user.token) {
       console.log(1);
       user.id &&
-        (await getData(user.id)
+        (await getData(id as string)
           .then((response: ApiResponse) => {
             console.log(response);
             const userData = response.data;
@@ -148,7 +148,6 @@ function Profile() {
                 city: userData.city,
                 tg: userData.telegram,
                 inst: userData.instagram,
-                id: String(userData.id),
               })
             );
             console.log(user);
@@ -184,7 +183,7 @@ function Profile() {
             <div className={styles.title}>
               <div className={styles.name}>
                 {userData?.name}
-                {userData && (
+                {userData && id == user.id && (
                   <Form onSave={handleSave}>
                     <FormOutlined style={{ fontSize: "25px" }} />
                   </Form>
@@ -210,11 +209,14 @@ function Profile() {
           </div>
           <div className={styles.info}>
             <div className={styles.description}>
-              <span onClick={() => setEditDescription(true)}>
-                <IconComponent />
-                {userData?.description ? "Изменить " : "Добавить "}
-                описание
-              </span>
+              {id == user.id && (
+                <span onClick={() => setEditDescription(true)}>
+                  <IconComponent />
+                  {userData?.description ? "Изменить " : "Добавить "}
+                  описание
+                </span>
+              )}
+
               {isEditDescription ? (
                 <>
                   <Textarea
@@ -238,26 +240,27 @@ function Profile() {
                 descComponent
               )}
             </div>
-            <div className={styles.addServices}>
-              {addService ? (
-                <AddService
-                  Cansel={() => setAddService(false)}
-                  onSave={(data: Item) =>
-                    setServiceList((prevServiceList) => [
-                      ...prevServiceList,
-                      data,
-                    ])
-                  }
-                />
-              ) : (
-                <span onClick={() => setAddService(true)}>
-                  <PlusOutlined />
-                  Добавить услугу
-                </span>
-              )}
-            </div>
+            {id == user.id && (
+              <div className={styles.addServices}>
+                {addService ? (
+                  <AddService
+                    Cansel={() => setAddService(false)}
+                    onSave={(data: Item) =>
+                      setServiceList((prevServiceList) => [
+                        ...prevServiceList,
+                        data,
+                      ])
+                    }
+                  />
+                ) : (
+                  <span onClick={() => setAddService(true)}>
+                    <PlusOutlined />
+                    Добавить услугу
+                  </span>
+                )}
+              </div>
+            )}
             {!isLoadedServices && <Loading />}
-
             {serviceList.length > 0 && (
               <div className={styles.services}>
                 <div>Услуги</div>

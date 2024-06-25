@@ -6,6 +6,7 @@ import Login from "./pages/login/login";
 import Profile from "./pages/profile/profile";
 import Menu from "./pages/menu/menu";
 import Service from "./pages/service/service";
+import Order from "./pages/order/order";
 
 const router = createBrowserRouter(
   [
@@ -36,6 +37,10 @@ const router = createBrowserRouter(
         {
           path: "/service/:id",
           element: <Service />,
+        },
+        {
+          path: "/order",
+          element: <Order />,
         },
       ],
     },

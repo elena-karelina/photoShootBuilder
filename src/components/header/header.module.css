@@ -46,6 +46,22 @@
   z-index: 5;
   /* text-shadow: 0 0 5px rgb(214, 202, 221); */
 }
+.order {
+  position: relative;
+}
+.order > span {
+  position: absolute;
+  font-size: 11px;
+  top: -8px;
+  background-color: rgb(81, 50, 92);
+  color: aliceblue;
+  width: 13px;
+  min-height: 13px;
+  text-align: center;
+  line-height: 13px;
+  right: -8px;
+  border-radius: 50%;
+}
 @media (max-width: 720px) {
   .menu_button {
     display: block;
@@ -64,6 +80,9 @@
   .menu:hover,
   .menu_button:hover + .menu {
     display: block;
+  }
+  .order > span {
+    top: -3px;
   }
   .menu > div:hover {
     opacity: 0.8;

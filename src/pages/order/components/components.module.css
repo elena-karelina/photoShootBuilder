@@ -1,0 +1,29 @@
+.title {
+  font-weight: 500;
+  font-size: 22px;
+  color: rgb(78, 47, 72);
+  margin-bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+.title > p {
+  margin: 0;
+}
+.title > *:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
+.author {
+  margin-top: 0px;
+  font-family: monospace;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgb(136, 135, 136);
+  margin-bottom: 0;
+}
+.cost {
+  margin-top: 8px;
+  font-size: 14px;
+  color: rgb(69, 65, 69);
+}

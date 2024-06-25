@@ -17,33 +17,36 @@ export interface Item {
   itemDescription: string;
   costPerHour: number;
   itemType: number;
+  pictures: string;
 }
-const Card: React.FC<Props> = ({ type, data }) => (
-  <CardAntd className={style[type]} cover={<Slider />}>
-    <Meta
-      avatar={
-        type != "profile" && (
-          <Avatar src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCkltroXX2ZBvm8R1BCPD_ZJJZbjd-E1kxZw&s" />
-        )
-      }
-      title={
-        <Link to={`/service/${data.id}`} style={{ color: "black" }}>
-          {data.itemName}
-        </Link>
-      }
-      description={
-        <>
-          <span>Цена: {data.costPerHour} ₽</span>
-          <br />
-          <span>
-            {data.itemDescription.length > 25
-              ? data.itemDescription.slice(0, 25) + "..."
-              : data.itemDescription}
-          </span>
-        </>
-      }
-    />
-  </CardAntd>
-);
+const Card: React.FC<Props> = ({ type, data }) => {
+  return (
+    <CardAntd className={style[type]} cover={<Slider photo={data.pictures} />}>
+      <Meta
+        avatar={
+          type != "profile" && (
+            <Avatar src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCkltroXX2ZBvm8R1BCPD_ZJJZbjd-E1kxZw&s" />
+          )
+        }
+        title={
+          <Link to={`/service/${data.id}`} style={{ color: "black" }}>
+            {data.itemName}
+          </Link>
+        }
+        description={
+          <>
+            <span>Цена: {data.costPerHour} ₽</span>
+            <br />
+            <span>
+              {data.itemDescription.length > 25
+                ? data.itemDescription.slice(0, 25) + "..."
+                : data.itemDescription}
+            </span>
+          </>
+        }
+      />
+    </CardAntd>
+  );
+};
 
 export default Card;
