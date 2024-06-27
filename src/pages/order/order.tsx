@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {ChangeEvent, useEffect, useState} from "react";
 import styles from "./order.module.css";
 import Loading from "../../components/ui/loading/loading";
 import { useSelector, TypedUseSelectorHook } from "react-redux";
@@ -13,19 +13,28 @@ import Textarea from "../../components/ui/textarea/textarea";
 import { Checkbox, ConfigProvider, DatePicker, InputNumber } from "antd";
 import type { DatePickerProps, InputNumberProps } from "antd";
 import ServiceShedule from "./components/serviceShedule";
+// import instance from "../../shared/api/requests/axiosInstance.ts";
+import instanceAn from "../../shared/api/requests/axiosInstanceAN.ts";
+import {useAuth} from "../../hooks/useAuth.ts";
+import {parseISO} from "date-fns";
 export interface Item {
   id: number;
   name: string;
   ownerName: string;
   ownerId: number;
   cost: number;
-  dateTimeStart?: string;
-  dateTimeEnd?: string;
+  dateTimeStart?: string | undefined | Date;
+  dateTimeEnd?: string | undefined | Date;
 }
 interface RequestTimeSlots {
   members: string[] | undefined;
   date: string[] | string | undefined;
   duration: number | undefined;
+}
+
+interface TimeSlot {
+  start: Date;
+  end: Date;
 }
 export interface FormData {
   name: string;
@@ -33,10 +42,18 @@ export interface FormData {
   itemsInApplication: {
     itemId: number;
     ownerId: number;
-    dateTimeStart: string;
-    dateTimeEnd: string;
+    dateTimeStart: string | Date;
+    dateTimeEnd: string | Date;
   }[];
 }
+
+export interface ItemInApplication {
+  itemId: number;
+  ownerId: number;
+  dateTimeStart: string | undefined | Date;
+  dateTimeEnd: string | undefined | Date;
+}
+
 function Order() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isContinueRegistration, setIsContinueRegistration] = useState(false);
@@ -48,7 +65,10 @@ function Order() {
     date: undefined,
     duration: undefined,
   });
-
+  const [timeSlots, setTimeSlots] = useState<TimeSlot[]>([]);
+  const user = useAuth();
+  const [description, setDescription] = useState("");
+  const [name, setName] = useState("");
   const fetchData = async () => {
     setServiceList(items);
     setIsLoaded(true);
@@ -111,9 +131,78 @@ function Order() {
       number: value,
     }));
   };
+
+  const handleNameInputChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    setName(event.target.value);
+  };
+  const handleTextareaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    setDescription(event.target.value);
+  };
+
   const handleRequestsTimeSlots = () => {
     console.log("data for request ", requestsTimeSlots);
+
+    instanceAn.post("application/reservationTime", {
+      hours: requestsTimeSlots.duration,
+      applicationDate: requestsTimeSlots.date,
+      itemsId: requestsTimeSlots.members,
+    })
+        .then(response => {
+          // Обработка успешного ответа
+          if (Array.isArray(response.data)) {
+            // Проверка, что данные в правильном формате
+            const parsedTimeSlots = response.data.map((slot: any) => ({
+              start: new Date(slot.start),
+              end: new Date(slot.end),
+            }));
+            setTimeSlots(parsedTimeSlots);
+            console.log(response.data);
+          } else {
+            console.error("Неверный формат данных от сервера");
+          }
+        })
+        .catch(error => {
+          // Обработка ошибок
+          console.error("Ошибка при отправке запроса:", error);
+        });
   };
+
+  const handleCreate = () => {
+
+   const  itemsInApplication:ItemInApplication[] =[
+     {
+       itemId: serviceList[0].id,
+       ownerId: serviceList[0].ownerId,
+       dateTimeStart: parseISO(serviceList[0].dateTimeStart).toISOString(),
+       dateTimeEnd: parseISO(serviceList[0].dateTimeEnd).toISOString()
+     }
+   ];
+
+console.log(itemsInApplication);
+    instanceAn.post("application/create", {
+      ownerUserId: user.id,
+      ownerName: user.fullName,
+      applicationName: name,
+      applicationDescription: description,
+      itemsInApplication: itemsInApplication,
+    })
+        .then(response => {
+          console.log(response.data);
+          // Обработка успешного ответа
+          if (Array.isArray(response.data)) {
+            // Проверка, что данные в правильном формате
+            console.log(response.data);
+          } else {
+            console.error("Неверный формат данных от сервера");
+          }
+        })
+        .catch(error => {
+          // Обработка ошибок
+          console.error("Ошибка при отправке запроса:", error);
+        });
+  };
+
+
   if (!isLoaded) return <Loading />;
   else
     return (
@@ -153,11 +242,13 @@ function Order() {
                     placeholder="Название"
                     variant="addService"
                     errors={errors as FieldErrors<FormData>}
+                    onChange={handleNameInputChange}
                   />
                   <Textarea
                     placeholder="Пожелания/комментарии"
                     register={register}
                     name="description"
+                    onChange={handleTextareaChange}
                   />
                   <div className={styles.time_block}>
                     Показать время для:
@@ -189,6 +280,19 @@ function Order() {
                     >
                       Показать общие свободные слоты
                     </Button>
+
+                    {/* Вывод таймслотов */}
+                    {timeSlots.map((slot, index) => (
+                        <div key={index}>
+                          <p>
+                            {slot.start.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' })}
+                            {slot.start.toLocaleTimeString('ru-RU', { hour: 'numeric', minute: 'numeric' })}
+                            -
+                            {slot.end.toLocaleTimeString('ru-RU', { hour: 'numeric', minute: 'numeric' })}
+                          </p>
+                        </div>
+                    ))}
+
                   </div>
                   <div>Назначить время:</div>
                   {serviceList.map((service, index) => (
@@ -209,7 +313,7 @@ function Order() {
                       }
                     />
                   ))}
-                  <Button type="submit" variant="form">
+                  <Button type="submit" variant="form" onClick={handleCreate}>
                     Сохранить
                   </Button>
                 </form>

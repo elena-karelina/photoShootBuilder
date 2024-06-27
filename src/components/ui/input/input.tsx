@@ -5,6 +5,7 @@ import {
   FieldValues,
   Path,
 } from "react-hook-form";
+import {ChangeEvent} from "react";
 
 interface InputProps<T extends FieldValues> {
   register: UseFormRegister<T>;
@@ -14,6 +15,7 @@ interface InputProps<T extends FieldValues> {
   type?: string;
   variant?: string;
   multiple?: boolean;
+  onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 function Input<T extends FieldValues>({
@@ -24,6 +26,7 @@ function Input<T extends FieldValues>({
   type,
   multiple,
   variant,
+    onChange
 }: InputProps<T>) {
   const path = typeof name === "string" ? name : (name as string);
   return (
@@ -37,6 +40,7 @@ function Input<T extends FieldValues>({
         } ${errors?.photo && type == "file" && styles.file_error}
         ${variant ? styles[variant] : ""}`}
         multiple={multiple ? true : undefined}
+        onChange={onChange}
       />
       {errors && errors[name] && type != "file" && (
         <div className={styles.errors}>{errors[name]?.message as string}</div>
