@@ -30,6 +30,7 @@ interface RequestTimeSlots {
   members: string[] | undefined;
   date: string[] | string | undefined;
   duration: number | undefined;
+  number: number | undefined;
 }
 
 interface TimeSlot {
@@ -143,7 +144,7 @@ function Order() {
     console.log("data for request ", requestsTimeSlots);
 
     instanceAn.post("application/reservationTime", {
-      hours: requestsTimeSlots.duration,
+      hours: requestsTimeSlots.number,
       applicationDate: requestsTimeSlots.date,
       itemsId: requestsTimeSlots.members,
     })
