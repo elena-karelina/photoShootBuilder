@@ -13,22 +13,13 @@ const ServiceShedule: React.FC<Props> = ({
   onDateTimeChange,
   register,
 }) => {
-  register(
-    { name: `itemsInApplication[${service.id}].itemId` },
-    { required: true }
-  );
-  register(
-    { name: `itemsInApplication[${service.id}].ownerId` },
-    { required: true }
-  );
-  register(
-    { name: `itemsInApplication[${service.id}].dateTimeStart` },
-    { required: true }
-  );
-  register(
-    { name: `itemsInApplication[${service.id}].dateTimeEnd` },
-    { required: true }
-  );
+  register(`itemsInApplication[${service.id}].itemId`, { required: true });
+  register(`itemsInApplication[${service.id}].ownerId`, { required: true });
+  register(`itemsInApplication[${service.id}].dateTimeStart`, {
+    required: true,
+  });
+  register(`itemsInApplication[${service.id}].dateTimeEnd`, { required: true });
+
   const [startDate, setStartDate] = useState<Dayjs | null>(null);
   const [endDate, setEndDate] = useState<Dayjs | null>(null);
 

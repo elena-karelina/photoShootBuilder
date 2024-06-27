@@ -77,7 +77,8 @@ function Order() {
 
     const formData: FormData = {
       ...data,
-      itemsInApplication,
+      itemsInApplication:
+        itemsInApplication.length > 0 ? itemsInApplication : [],
     };
 
     console.log(formData);

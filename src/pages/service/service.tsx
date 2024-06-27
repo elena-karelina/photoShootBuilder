@@ -101,7 +101,7 @@ function Service() {
         <div className={styles.service}>
           <div className={styles.info}>
             <div className={styles.slider}>
-              <Slider type="profile" />
+              <Slider type="profile" photo="#" />
             </div>
             <div>
               {user.isAuth && (
